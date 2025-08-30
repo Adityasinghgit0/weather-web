@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css" integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background: #222;
+
+        }
+        .card{
+            width: 90%;
+            max-width: 470px;
+            background: linear-gradient(135deg,#02355f,#0a0101);
+            color: #fff;
+            margin: 100px auto 0;
+            border-radius: 20px;
+            padding: 40px 35px;
+            text-align: center;
+        }
+        .search{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: c;
+        }
+        .search input{
+            border: 0;
+            outline: 0;
+            background: #ebfffc;
+            color: #555;
+            padding: 10px 25px;
+            height: 60px;
+            border-radius: 30px;
+            flex: 1;
+            margin-right: 16px;
+            font-size: 18px;
+
+        }
+        .search button{
+            border: 0;
+            outline: 0;
+            background: #ebfffc;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+        }
+        .search button i {
+            font-size: 15px;
+        }
+        .weather-icon{
+            font-size: 40px;
+            margin-top: 90px;
+        }
+        .weather h1{
+            font-size: 40px;
+            font-weight: 500;
+        }
+        .weather h2{
+            font-size: 50px;
+            font-weight: 500;
+        }
+        .details{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            margin-top: 50%;
+
+        }
+        .clo{
+            display: flex;
+            align-items: center;
+            text-align: left;
+        }
+        .clo img{
+            width: 40px;
+            margin-right: 10px;
+        }
+        .humidity, .wind {
+
+            
+        }
+
+    </style>
+</head>
+<body>
+    <div class="card">
+         <div class="search">
+            <input type="text" placeholder="Enter city name" spellcheck="false">
+            <button><i class="ri-search-line"></i></button>
+         </div>
+         <div class="error">
+             
+         </div>
+        <div class="weather">
+        <i class="weather-icon ri-rainy-line"></i>
+        <h1 class="temp">22°c</h1>
+        <h2 class="city">Kanpur nagar</h2>
+        <div class="details">
+            <div class="clo">
+                <img src="https://cdn-icons-png.flaticon.com/256/4148/4148460.png">
+            <div>
+            <p class="humidity">50%</p>
+            <p>Humidity</p>
+           </div>
+           </div>
+            <div class="clo">
+               <img src="https://cdn-icons-png.flaticon.com/512/2529/2529971.png">
+           <div>
+           <p class="wind">50%</p>
+           <p>wind speed</p>
+    </div>
+    </div>
+    <script>
+
+        const apiKey ="e28fae7ce65a5cc00ebce1b5e935a009";
+        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+        const searchBox = document.querySelector(".search input");
+        const searchBtn = document.querySelector(".search button");
+
+        async function checkWeather(city){
+            const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+            var data=await response.json()
+
+            console.log(data)
+
+            document.querySelector(".city").innerHTML = data.name;
+            document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
+            document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+            document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
+        }
+
+        searchBtn.addEventListener("click", ()=>{
+            checkWeather(searchBox.value);
+        })
+
+        checkWeather()
+    </script>
+
+
+
+</body>
+</html>
